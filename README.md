@@ -52,7 +52,7 @@ Kibana used about 1.8 GB on Railway and ran out of Node heap under the Trial pla
 
 **Memory and scaling**
 
-The JVM heap is 40% of the service's memory limit, between 256 and 1024 MB, unless you set `ELASTICSEARCH_HEAP_MB`; Elasticsearch pre-touches the whole heap, so idle RAM is roughly heap + 0.5 GB. Measured on Railway: about 0.8 GB under the Trial plan's 1 GB limit (heap 381 MB, small indexes only) and about 1.6 GB with the default 1 GB heap on larger plans. For real workloads give the service more memory and set the heap to about half of it. The Free plan (0.5 GB) is too small for Elasticsearch. This template is a single node (new indexes default to one replica, which a single node cannot place, so cluster health shows yellow; set `number_of_replicas: 0` on your indexes for green); scale vertically. Memory mapping is off (`node.store.allow_mmap: false`) because Railway cannot raise `vm.max_map_count`.
+The JVM heap is 40% of the service's memory limit, between 256 and 1024 MB, unless you set `ELASTICSEARCH_HEAP_MB`; Elasticsearch pre-touches the whole heap, so idle RAM is roughly heap + 0.5 GB. Measured on Railway: about 0.8 GB under the Trial plan's 1 GB limit (heap 381 MB, small indexes only) and about 1.6 GB with the default 1 GB heap on larger plans (both measured). For real workloads give the service more memory and set the heap to about half of it. The Free plan (0.5 GB) is too small for Elasticsearch. This template is a single node (new indexes default to one replica, which a single node cannot place, so cluster health shows yellow; set `number_of_replicas: 0` on your indexes for green); scale vertically. Memory mapping is off (`node.store.allow_mmap: false`) because Railway cannot raise `vm.max_map_count`.
 
 **Upgrades**
 

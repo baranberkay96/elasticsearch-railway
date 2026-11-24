@@ -33,7 +33,7 @@ Optional add-on (not deployed): `services/kibana` (Kibana 9.5.7 `@sha256:e34ecf8
 
 | Service | Idle RAM | Typical RAM | CPU |
 |---|---|---|---|
-| Elasticsearch | ES_RAM | heap + 0.5-1 GB | low idle, bursts on indexing |
+| Elasticsearch | 1.6 GB measured with the default 1 GB heap; 0.83 GB under a 1 GB (Trial) limit | heap + 0.5-1 GB | low idle, bursts on indexing |
 
 ES pre-touches its heap (`-XX:+AlwaysPreTouch` in the image's jvm.options), so idle RAM ≈ heap + 0.45 GB. Estimated cost: ≈$8-16/month idle + volume. Minimum plan: Trial for small indexes (measured 0.83 GB under the 1 GB cap); not Free (0.5 GB).
 
