@@ -1,5 +1,7 @@
 # Deploy and Host Elasticsearch with Railway
 
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/elasticsearch-95-search-engine?referralCode=20H68q)
+
 Elasticsearch is the distributed search and analytics engine behind the Elastic Stack: full-text search, vector and hybrid search, log and metrics analytics, and aggregations over large data sets through a REST API. This template runs Elasticsearch 9.5 as a secured single node with a generated `elastic` password; Kibana can be added from the same repo.
 
 ## About Hosting Elasticsearch
