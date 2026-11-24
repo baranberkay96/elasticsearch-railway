@@ -1,0 +1,4 @@
+# Role for anonymous requests: cluster health only.
+railway_health:
+  cluster:
+    - "cluster:monitor/health"

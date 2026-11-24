@@ -1,0 +1,25 @@
+# Elasticsearch settings for a single Railway service (see README).
+cluster.name: "docker-cluster"
+node.name: "elasticsearch"
+discovery.type: "single-node"
+
+# HTTP on all addresses, dual-stack (Railway's IPv4 healthcheck and the
+# IPv6/IPv4 private network). Transport stays on loopback: single node, and
+# no production bootstrap checks that Railway hosts cannot satisfy.
+http.host: "::"
+transport.host: "127.0.0.1"
+
+# Railway cannot raise vm.max_map_count; use NIO instead of mmap.
+node.store.allow_mmap: false
+
+xpack.security.enabled: true
+xpack.security.enrollment.enabled: false
+# Railway terminates TLS at its edge; the private network is not public.
+xpack.security.http.ssl.enabled: false
+xpack.security.transport.ssl.enabled: false
+
+# Unauthenticated requests may only read cluster health (Railway's
+# healthcheck). Everything else still answers 401 and asks for a login.
+xpack.security.authc.anonymous.username: "railway_health"
+xpack.security.authc.anonymous.roles: "railway_health"
+xpack.security.authc.anonymous.authz_exception: false
