@@ -1,22 +1,21 @@
 {
- "name": "Elasticsearch 9.5 with Kibana",
- "idSeed": "Elasticsearch 9.5 with Kibana / 2026-11-24",
- "description": "Elasticsearch search and analytics with Kibana, security and login on.",
+ "name": "Elasticsearch 9.5 Search Engine",
+ "idSeed": "Elasticsearch 9.5 Search Engine / 2026-11-24",
+ "description": "Elasticsearch 9.5 search and analytics engine, security and login on.",
  "category": "Storage",
  "tags": [
   "elasticsearch",
-  "kibana",
   "search",
   "search-engine",
   "full-text-search",
   "logs",
   "analytics",
-  "elk"
+  "vector-search"
  ],
  "image": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/elasticsearch.svg",
  "upstream": {
   "elasticsearch": "docker.elastic.co/elasticsearch/elasticsearch:9.5.7@sha256:8aa3b18f6a26880f4c2fa1ffb37a48213e201b0b6a1a47412c66b1f5d533de91 (Elastic License 2.0 default distribution)",
-  "kibana": "docker.elastic.co/kibana/kibana:9.5.7@sha256:e34ecf8da9b5d858cbdff21a9049b4f21ee99e1039933b20c4fbdf8b500eabf5 (Elastic License 2.0)",
+  "kibana": "optional add-on in services/kibana (not deployed by default: needs ~2 GB RAM)",
   "released": "2026-11-23",
   "checked": "2026-11-24"
  },
@@ -48,14 +47,9 @@
      "description": "Password of the elastic superuser (12+ chars), re-applied at every start.",
      "required": false
     },
-    "KIBANA_SYSTEM_PASSWORD": {
-     "defaultValue": "${{secret(32, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\")}}",
-     "description": "Internal password Kibana uses to connect (kibana_system user). Leave as is.",
-     "required": false
-    },
     "ELASTICSEARCH_HEAP_MB": {
      "defaultValue": "",
-     "description": "JVM heap in MB. Empty = 40% of the service's memory limit (256-2048).",
+     "description": "JVM heap in MB. Empty = 40% of the service's memory limit (256-1024).",
      "required": false
     },
     "PORT": {
@@ -76,77 +70,6 @@
     "RAILWAY_DEPLOYMENT_DRAINING_SECONDS": {
      "defaultValue": "60",
      "description": "Seconds Elasticsearch gets to flush and close shards on redeploy.",
-     "required": false
-    }
-   }
-  },
-  "Kibana": {
-   "icon": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/kibana.svg",
-   "source": {
-    "repo": "baranberkay96/elasticsearch-railway",
-    "rootDirectory": "/services/kibana"
-   },
-   "healthcheckPath": "/login",
-   "healthcheckTimeout": 1200,
-   "restartPolicyType": "ALWAYS",
-   "numReplicas": 1,
-   "publicDomain": true,
-   "targetPort": 5601,
-   "tcpProxy": null,
-   "variables": {
-    "ELASTICSEARCH_HOSTS": {
-     "defaultValue": "http://${{Elasticsearch.RAILWAY_PRIVATE_DOMAIN}}:${{Elasticsearch.PORT}}",
-     "description": "Elasticsearch on the private network.",
-     "required": false
-    },
-    "ELASTICSEARCH_USERNAME": {
-     "defaultValue": "kibana_system",
-     "description": "Built-in user Kibana connects with.",
-     "required": false
-    },
-    "ELASTICSEARCH_PASSWORD": {
-     "defaultValue": "${{Elasticsearch.KIBANA_SYSTEM_PASSWORD}}",
-     "description": "Password of kibana_system (set by the Elasticsearch service).",
-     "required": false
-    },
-    "SERVER_PUBLICBASEURL": {
-     "defaultValue": "https://${{RAILWAY_PUBLIC_DOMAIN}}",
-     "description": "Public URL of Kibana (links in alerts and reports).",
-     "required": false
-    },
-    "XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY": {
-     "defaultValue": "${{secret(48, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\")}}",
-     "description": "Encrypts saved-object secrets (alerting, connectors). Never change it later.",
-     "required": false
-    },
-    "XPACK_SECURITY_ENCRYPTIONKEY": {
-     "defaultValue": "${{secret(48, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\")}}",
-     "description": "Encrypts login sessions (32+ characters).",
-     "required": false
-    },
-    "XPACK_REPORTING_ENCRYPTIONKEY": {
-     "defaultValue": "${{secret(48, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\")}}",
-     "description": "Encrypts report jobs (32+ characters).",
-     "required": false
-    },
-    "XPACK_SECURITY_SECURECOOKIES": {
-     "defaultValue": "true",
-     "description": "Session cookies only over HTTPS (Railway domains are HTTPS).",
-     "required": false
-    },
-    "TELEMETRY_OPTIN": {
-     "defaultValue": "false",
-     "description": "Send usage telemetry to Elastic.",
-     "required": false
-    },
-    "NEWSFEED_ENABLED": {
-     "defaultValue": "false",
-     "description": "Show Elastic's news feed in Kibana.",
-     "required": false
-    },
-    "PORT": {
-     "defaultValue": "5601",
-     "description": "Port Kibana listens on.",
      "required": false
     }
    }

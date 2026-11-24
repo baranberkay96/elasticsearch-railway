@@ -51,7 +51,7 @@ if [[ "${ES_JAVA_OPTS:-}" != *-Xmx* ]]; then
       heap=1024
     fi
     (( heap < 256 )) && heap=256
-    (( heap > 2048 )) && heap=2048
+    (( heap > 1024 )) && heap=1024
   fi
   export ES_JAVA_OPTS="-Xms${heap}m -Xmx${heap}m ${ES_JAVA_OPTS:-}"
   log "JVM heap ${heap} MB (ELASTICSEARCH_HEAP_MB overrides)"

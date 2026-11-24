@@ -7,7 +7,7 @@ This is a community template. It is not made, endorsed or supported by Elastic N
 | Component | Source | License | How it is used |
 |---|---|---|---|
 | Elasticsearch 9.5.7 (`docker.elastic.co/elasticsearch/elasticsearch:9.5.7@sha256:8aa3b18f6a26880f4c2fa1ffb37a48213e201b0b6a1a47412c66b1f5d533de91`) | https://github.com/elastic/elasticsearch | Default distribution under the Elastic License 2.0 (image label `Elastic-License-2.0`); source also under AGPLv3/SSPL | Official image, unmodified, as the base image |
-| Kibana 9.5.7 (`docker.elastic.co/kibana/kibana:9.5.7@sha256:e34ecf8da9b5d858cbdff21a9049b4f21ee99e1039933b20c4fbdf8b500eabf5`) | https://github.com/elastic/kibana | Elastic License 2.0 | Official image, unmodified, as the base image |
+| Kibana 9.5.7 (`docker.elastic.co/kibana/kibana:9.5.7@sha256:e34ecf8da9b5d858cbdff21a9049b4f21ee99e1039933b20c4fbdf8b500eabf5`) | https://github.com/elastic/kibana | Elastic License 2.0 | Optional add-on in `services/kibana` (not deployed by default); official image, unmodified, as the base image |
 
 ### Licence caveat (Elastic License 2.0)
 

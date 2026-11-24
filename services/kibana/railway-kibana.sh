@@ -47,12 +47,12 @@ if [[ -z "${ELASTICSEARCH_PASSWORD:-}" ]]; then
   log "WARNING: ELASTICSEARCH_PASSWORD (kibana_system) is empty; Kibana cannot connect until it is set."
 fi
 
-# Below 2 GB of memory, cap Node's heap so Kibana fits the plan (STANDARD 8.31).
+# Kibana needs roughly 1.5-2 GB; below 2 GB give Node 75 % of the limit and say so (STANDARD 8.31).
 limit=$(cat /sys/fs/cgroup/memory.max 2>/dev/null || echo max)
 if [[ "$limit" =~ ^[0-9]+$ ]] && (( limit < 2 * 1024 * 1024 * 1024 )) && [[ "${NODE_OPTIONS:-}" != *max-old-space-size* ]]; then
-  heap=$(( limit / 1048576 * 60 / 100 ))
+  heap=$(( limit / 1048576 * 75 / 100 ))
   export NODE_OPTIONS="--max-old-space-size=$heap ${NODE_OPTIONS:-}"
-  log "memory limit $(( limit / 1048576 )) MB: Node heap capped at $heap MB"
+  log "WARNING: memory limit $(( limit / 1048576 )) MB is below the ~2 GB Kibana needs; Node heap set to $heap MB"
 fi
 
 log "starting Kibana on [::]:$PORT, Elasticsearch at $ELASTICSEARCH_HOSTS"
